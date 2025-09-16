@@ -37,15 +37,25 @@ namespace CareerSolutions.Controllers
         }
 
         // POST api/<JobsController>
-        [HttpPost]
-        public async Task<ActionResult<Job>> Post([FromBody] Job value)
+        //[HttpPost]
+        //public async Task<ActionResult<Job>> Post([FromBody] Job value)
+        //{
+
+        //    await _context.Jobs.AddAsync(value);
+        //    _context.SaveChangesAsync();
+        //    return CreatedAtAction(nameof(Get), new { id = value.Id }, value);
+        //}
+
+
+        [HttpGet("ByJob/{jobPostId}")]
+        public async Task<IActionResult> GetApplicationsByJob(int jobPostId)
         {
-
-            await _context.Jobs.AddAsync(value);
-            _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = value.Id }, value);
+            var applications = await _context.Applications
+                .Include(a => a.JobSeeker)
+                .Where(a => a.JobPostId == jobPostId)
+                .ToListAsync();
+            return Ok(applications);
         }
-
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchJobs([FromQuery] string? keyword, [FromQuery] string? location, [FromQuery] string? industry)
