@@ -6,7 +6,6 @@ namespace CareerSolutions.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<Job> Jobs { get; set; }
         public DbSet<ApplicationBuilder> Applications { get; set; }
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
